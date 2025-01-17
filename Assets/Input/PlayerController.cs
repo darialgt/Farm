@@ -15,10 +15,10 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
-public partial class @PlayerController: IInputActionCollection2, IDisposable
+public partial class @PlayerInputMap: IInputActionCollection2, IDisposable
 {
     public InputActionAsset asset { get; }
-    public @PlayerController()
+    public @PlayerInputMap()
     {
         asset = InputActionAsset.FromJson(@"{
     ""name"": ""PlayerController"",
@@ -124,9 +124,9 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
     }
 
-    ~@PlayerController()
+    ~@PlayerInputMap()
     {
-        UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, PlayerController.Player.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, PlayerInputMap.Player.Disable() has not been called.");
     }
 
     public void Dispose()
@@ -192,8 +192,8 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Jump;
     public struct PlayerActions
     {
-        private @PlayerController m_Wrapper;
-        public PlayerActions(@PlayerController wrapper) { m_Wrapper = wrapper; }
+        private @PlayerInputMap m_Wrapper;
+        public PlayerActions(@PlayerInputMap wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
